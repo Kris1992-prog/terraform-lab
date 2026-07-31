@@ -1,6 +1,5 @@
 name: 'Terraform CI'
 
-# La pipeline si attiva ogni volta che fai un Push o apri una Pull Request sul branch main
 on:
   push:
     branches: [ "main" ]
@@ -13,35 +12,39 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Scarica il codice del repository sulla macchina di test di GitHub
+      # 1. Scarica il codice del repository
       - name: Checkout del codice
         uses: actions/checkout@v4
 
-      # 2. Configura le credenziali AWS usando i Secrets del repository
+      # 2. Configura le credenziali AWS
       - name: Configura credenziali AWS
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-south-1 # Modifica con la tua regione AWS (es. eu-central-1, us-east-1)
+          aws-region: eu-south-1 # Cambia se usi una regione diversa
 
-      # 3. Installa l'eseguibile di Terraform
+      # 3. Avvia un cluster Kubernetes temporaneo (KinD) per i test
+      - name: Create Kubernetes KinD Cluster
+        uses: helm/kind-action@v1.12.0
+
+      # 4. Installa l'eseguibile di Terraform
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
-      # 4. Inizializza i provider (terraform init)
+      # 5. Inizializza i provider (terraform init)
       - name: Terraform Init
         run: terraform init
 
-      # 5. Verifica la formattazione del codice (terraform fmt -check)
+      # 6. Controllo Formattazione (fmt)
       - name: Controllo Formattazione (fmt)
         run: terraform fmt -check
 
-      # 6. Valida la sintassi del codice (terraform validate)
+      # 7. Validazione Codice (validate)
       - name: Validazione Codice (validate)
         run: terraform validate
 
-      # 7. Esegue l'anteprima delle modifiche (terraform plan)
+      # 8. Anteprima Modifiche (plan)
       - name: Anteprima Modifiche (plan)
         run: terraform plan
         env:

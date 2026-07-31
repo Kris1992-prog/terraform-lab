@@ -1,0 +1,13 @@
+# 1. Cartella dei provider scaricati (molto pesante, si ricrea con terraform init)
+.terraform/
+
+# 2. File di stato (CONTENGONO SEGRETI E PASSWORD IN CHIARO!)
+*.tfstate
+*.tfstate.backup
+
+# 3. File con le tue variabili e password personali
+terraform.tfvars
+*.tfvars
+
+# 4. File di backup temporanei
+*.bak

@@ -44,3 +44,5 @@ jobs:
       # 7. Esegue l'anteprima delle modifiche (terraform plan)
       - name: Anteprima Modifiche (plan)
         run: terraform plan
+        env:
+          TF_VAR_db_password: ${{ secrets.TF_VAR_DB_PASSWORD }}

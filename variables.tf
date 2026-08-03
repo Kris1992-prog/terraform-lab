@@ -11,9 +11,9 @@ variable "instance_type" {
 }
 
 variable "db_password" {
-  description = "La master password del database RDS"
-  type        = string
-  sensitive   = true # Evita che la password venga stampata in chiaro nei log del terminale
+  type      = string
+  sensitive = true
+  default   = "Luana1992" # Valore di default se il secret su GitHub manca
 }
 
 variable "db_username" {

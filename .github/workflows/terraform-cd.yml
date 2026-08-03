@@ -1,0 +1,42 @@
+name: 'Terraform CD (Apply)'
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch: # Permette anche l'avvio manuale dalla dashboard di GitHub
+
+jobs:
+  terraform-cd:
+    name: 'Terraform Apply'
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Scarica il codice dal repository
+      - name: Checkout del codice
+        uses: actions/checkout@v4
+
+      # 2. Configura le credenziali AWS
+      - name: Configura credenziali AWS
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: eu-south-1
+
+      # 3. Avvia il cluster Kubernetes KinD (necessario per i provider Helm e K8s)
+      - name: Create Kubernetes KinD Cluster
+        uses: helm/kind-action@v1.12.0
+
+      # 4. Installa l'eseguibile di Terraform
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+
+      # 5. Inizializza i provider
+      - name: Terraform Init
+        run: terraform init
+
+      # 6. Esegue il Deployment dell'infrastruttura (Apply)
+      - name: Terraform Apply
+        run: terraform apply -auto-approve
+        env:
+          TF_VAR_db_password: ${{ secrets.TF_VAR_DB_PASSWORD }}

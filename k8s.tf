@@ -1,12 +1,14 @@
 # Resource per il Deployment dell'E-commerce
 resource "kubernetes_deployment_v1" "ecommerce_deployment" {
+  wait_for_rollout = false
+
   metadata {
     name = "ecommerce-deployment"
     labels = {
       app = "ecommerce"
     }
   }
-  wait_for_rollout = false
+
   spec {
     replicas = 2
 
@@ -75,7 +77,7 @@ resource "kubernetes_deployment_v1" "ecommerce_deployment" {
             }
           }
 
-          # --- CONTROLLO DI PRONTEZZA (Readiness Probe) ---
+          # --- READINESS PROBE ---
           readiness_probe {
             http_get {
               path = "/"
@@ -86,7 +88,7 @@ resource "kubernetes_deployment_v1" "ecommerce_deployment" {
             timeout_seconds       = 2
           }
 
-          # --- CONTROLLO DI VITALITÀ (Liveness Probe) ---
+          # --- LIVENESS PROBE ---
           liveness_probe {
             http_get {
               path = "/"
@@ -112,7 +114,7 @@ resource "kubernetes_ingress_v1" "ecommerce_ingress" {
   }
 
   spec {
-    ingress_class_name = "nginx" # <-- CORREZIONE: Collega l'Ingress al Controller di Helm
+    ingress_class_name = "nginx"
 
     rule {
       host = "ecommerce.local"
@@ -176,10 +178,9 @@ resource "kubernetes_secret_v1" "db_credentials" {
     name = "db-credentials"
   }
 
-  # CORREZIONE: usa string_data invece di data per accertare la corretta gestione del testo in chiaro
-  data = {
-    DB_USER = "kris_admin"
-    DB_PASS = "Luana1992"
+  string_data = {
+    DB_USER = var.db_username
+    DB_PASS = var.db_password
   }
 
   type = "Opaque"

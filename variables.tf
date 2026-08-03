@@ -16,6 +16,12 @@ variable "db_password" {
   sensitive   = true # Evita che la password venga stampata in chiaro nei log del terminale
 }
 
+variable "db_username" {
+  type        = string
+  description = "Username del database"
+  default     = "kris_admin"
+}
+
 variable "app_image_tag" {
   type        = string
   description = "Tag dell'immagine Docker per l'applicazione e-commerce"

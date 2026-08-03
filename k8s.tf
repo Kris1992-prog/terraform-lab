@@ -6,10 +6,9 @@ resource "kubernetes_deployment_v1" "ecommerce_deployment" {
       app = "ecommerce"
     }
   }
-
+  wait_for_rollout = false
   spec {
     replicas = 2
-    wait_for_rollout = false
 
     selector {
       match_labels = {

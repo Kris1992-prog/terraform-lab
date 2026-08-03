@@ -178,7 +178,7 @@ resource "kubernetes_secret_v1" "db_credentials" {
     name = "db-credentials"
   }
 
-  string_data = {
+  data = {
     DB_USER = var.db_username
     DB_PASS = var.db_password
   }

@@ -9,6 +9,7 @@ resource "kubernetes_deployment_v1" "ecommerce_deployment" {
 
   spec {
     replicas = 2
+    wait_for_rollout = false
 
     selector {
       match_labels = {

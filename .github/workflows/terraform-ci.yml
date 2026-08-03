@@ -46,6 +46,6 @@ jobs:
 
       # 8. Anteprima Modifiche (plan)
       - name: Anteprima Modifiche (plan)
-        run: terraform plan
+        run: terraform plan -no-color -input=false -lock=false
         env:
           TF_VAR_db_password: ${{ secrets.TF_VAR_DB_PASSWORD }}

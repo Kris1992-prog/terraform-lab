@@ -15,3 +15,9 @@ variable "db_password" {
   type        = string
   sensitive   = true # Evita che la password venga stampata in chiaro nei log del terminale
 }
+
+variable "app_image_tag" {
+  type        = string
+  description = "Tag dell'immagine Docker per l'applicazione e-commerce"
+  default     = "latest"
+}

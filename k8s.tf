@@ -26,7 +26,7 @@ resource "kubernetes_deployment_v1" "ecommerce_deployment" {
       spec {
         container {
           name              = "ecommerce-app"
-          image             = "kris1992/progetto-ecommerce:v2"
+          image             = image = "kris1992/progetto-ecommerce:${var.app_image_tag}"
           image_pull_policy = "IfNotPresent"
 
           port {

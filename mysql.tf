@@ -26,7 +26,7 @@ resource "aws_db_instance" "ecommerce_db" {
   engine_version          = "8.0"
   instance_class          = "db.t3.micro"
   storage_encrypted       = true  #  MODIFICA: Abilita la cifratura dello storage RDS
-  backup_retention_period = 7     # Conservazione dei backup automatici per 7 giornis
+  backup_retention_period = 1     # Conservazione dei backup automatici per 7 giornis
   publicly_accessible     = false # Impedisce l'accesso pubblico diretto al database
   deletion_protection     = true  # Protezione dalla cancellazione accidentale
   username                = "kris_admin"

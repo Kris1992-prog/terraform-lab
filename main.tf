@@ -33,7 +33,7 @@ resource "aws_instance" "mio_primo_server" {
   key_name               = "MioServerKeyMilano"
   vpc_security_group_ids = [aws_security_group.web_sg.id]
   http_tokens = "required"
-  
+
   # CONFIGURAZIONE AUTOMATICA (USER DATA):
   user_data = <<-EOF
               #!/bin/bash
@@ -75,6 +75,7 @@ resource "aws_security_group" "web_sg" {
   description = "Permetti traffico HTTP e SSH"
 
   ingress {
+    description = "Traffico HTTP da internet"
     from_port   = 80
     to_port     = 80
     protocol    = "tcp"
@@ -82,6 +83,7 @@ resource "aws_security_group" "web_sg" {
   }
 
   ingress {
+    description = "Accesso SSH"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -89,6 +91,7 @@ resource "aws_security_group" "web_sg" {
   }
 
   egress {
+    description = "Traffico in uscita"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"

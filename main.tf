@@ -32,7 +32,7 @@ resource "aws_instance" "mio_primo_server" {
   instance_type          = var.instance_type
   key_name               = "MioServerKeyMilano"
   vpc_security_group_ids = [aws_security_group.web_sg.id]
-  
+
   metadata_options {
     http_tokens = "required"
   }

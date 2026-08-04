@@ -27,6 +27,15 @@ jobs:
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
+      # Step da aggiungere prima di Terraform Init
+      - name: Scansione Sicurezza IaC con Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: 'config'
+          hide-progress: false
+          format: 'table'
+          exit-code: '0' # Mettiamo 0 per vedere i warning senza bloccare subito la build, o '1' per bloccarla in caso di errori gravi
+
       - name: Terraform Init
         run: terraform init
 

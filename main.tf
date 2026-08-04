@@ -32,7 +32,14 @@ resource "aws_instance" "mio_primo_server" {
   instance_type          = var.instance_type
   key_name               = "MioServerKeyMilano"
   vpc_security_group_ids = [aws_security_group.web_sg.id]
-  http_tokens = "required"
+  
+  metadata_options {
+    http_tokens = "required"
+  }
+
+  root_block_device {
+    encrypted = true
+  }
 
   # CONFIGURAZIONE AUTOMATICA (USER DATA):
   user_data = <<-EOF

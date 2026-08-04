@@ -28,7 +28,7 @@ resource "aws_db_instance" "ecommerce_db" {
   storage_encrypted       = true  #  MODIFICA: Abilita la cifratura dello storage RDS
   backup_retention_period = 1     # Conservazione dei backup automatici per 7 giornis
   publicly_accessible     = false # Impedisce l'accesso pubblico diretto al database
-  deletion_protection     = true  # Protezione dalla cancellazione accidentale
+  deletion_protection     = false  # Protezione dalla cancellazione accidentale
   username                = "kris_admin"
   password                = var.db_password
 

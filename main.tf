@@ -3,6 +3,24 @@ resource "aws_s3_bucket" "mio_bucket" {
   force_destroy = true
 }
 
+resource "aws_s3_bucket_versioning" "mio_bucket_versioning" {
+  bucket = aws_s3_bucket.mio_bucket.id
+
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
+
+resource "aws_s3_bucket_server_side_encryption_configuration" "mio_bucket_crypto" {
+  bucket = aws_s3_bucket.mio_bucket.id
+
+  rule {
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "AES256"
+    }
+  }
+}
+
 # Questa sorgente dati legge le informazioni dell'account AWS in uso
 data "aws_caller_identity" "corrente" {}
 

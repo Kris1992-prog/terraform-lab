@@ -154,7 +154,7 @@ resource "aws_s3_bucket" "log_bucket" {
 
 # Configurazione per collegare il bucket principale a quello dei log
 resource "aws_s3_bucket_logging" "mio_bucket_logging" {
-  bucket        = aws_s3_bucket.mio_bucket.id
+  bucket = aws_s3_bucket.mio_bucket.id
 
   target_bucket = aws_s3_bucket.log_bucket.id
   target_prefix = "log/"

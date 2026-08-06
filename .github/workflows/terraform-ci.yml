@@ -46,7 +46,7 @@ jobs:
 
       # 1. Installa TFLint
       - name: Setup TFLint
-        uses: terraform-linters/setup-tflint@v4
+        uses: terraform-linters/setup-tflint@v4.0.0
         with:
           tflint_version: v0.52.0
 

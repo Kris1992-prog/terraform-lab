@@ -1,8 +1,8 @@
-# variable "nome_bucket" {
-#  description = "Il nome del mio bucket S3"
-#  type        = string
-#  default     = "kris-bucket-test-2026-nuovo"
-# }
+variable "nome_bucket" {
+  description = "Il nome del mio bucket S3"
+  type        = string
+  default     = "kris-bucket-test-2026-nuovo"
+}
 
 variable "instance_type" {
   description = "Tipo di istanza EC2"
@@ -22,8 +22,8 @@ variable "db_username" {
   default     = "kris_admin"
 }
 
-# variable "app_image_tag" {
-#  type        = string
-#  description = "Tag dell'immagine Docker per l'applicazione e-commerce"
-#  default     = "latest"
-# }
+variable "app_image_tag" {
+  type        = string
+  description = "Tag dell'immagine Docker per l'applicazione e-commerce"
+  default     = "latest"
+}

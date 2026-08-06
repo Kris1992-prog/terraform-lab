@@ -4,6 +4,7 @@ resource "aws_security_group" "db_sg" {
   description = "Permetti traffico MySQL solo dal Web Server"
 
   ingress {
+    description     = "Consente traffico MySQL sulla porta 3306 dal Security Group web"
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
@@ -11,6 +12,7 @@ resource "aws_security_group" "db_sg" {
   }
 
   egress {
+    description = "Consente il traffico in uscita"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
@@ -20,17 +22,19 @@ resource "aws_security_group" "db_sg" {
 
 # 2. IL DATABASE RDS MYSQL
 resource "aws_db_instance" "ecommerce_db" {
-  allocated_storage       = 20
-  db_name                 = "ecommercedb"
-  engine                  = "mysql"
-  engine_version          = "8.0"
-  instance_class          = "db.t3.micro"
-  storage_encrypted       = true  #  MODIFICA: Abilita la cifratura dello storage RDS
-  backup_retention_period = 1     # Conservazione dei backup automatici per 7 giornis
-  publicly_accessible     = false # Impedisce l'accesso pubblico diretto al database
-  deletion_protection     = false # Protezione dalla cancellazione accidentale
-  username                = "kris_admin"
-  password                = var.db_password
+  allocated_storage                   = 20
+  db_name                             = "ecommercedb"
+  engine                              = "mysql"
+  engine_version                      = "8.0"
+  instance_class                      = "db.t3.micro"
+  storage_encrypted                   = true  #  MODIFICA: Abilita la cifratura dello storage RDS
+  backup_retention_period             = 1     # Conservazione dei backup automatici per 7 giornis
+  publicly_accessible                 = false # Impedisce l'accesso pubblico diretto al database
+  deletion_protection                 = false # Protezione dalla cancellazione accidentale
+  iam_database_authentication_enabled = true  # Abilita l'autenticazione tramite ruoli IAM
+  performance_insights_enabled        = true  # Abilita Performance Insights per il monitoraggio avanzato
+  username                            = "kris_admin"
+  password                            = var.db_password
 
   parameter_group_name = "default.mysql8.0"
   skip_final_snapshot  = true

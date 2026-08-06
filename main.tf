@@ -145,3 +145,17 @@ output "IP_ELASTICO" {
   value       = data.aws_eip.ip_permanente.public_ip
   description = "L'IP pubblico statico (Elastic IP) del server e-commerce"
 }
+
+# Bucket dedicato alla conservazione dei log
+resource "aws_s3_bucket" "log_bucket" {
+  bucket        = "kris-bucket-logs-2026"
+  force_destroy = true
+}
+
+# Configurazione per collegare il bucket principale a quello dei log
+resource "aws_s3_bucket_logging" "mio_bucket_logging" {
+  bucket        = aws_s3_bucket.mio_bucket.id
+
+  target_bucket = aws_s3_bucket.log_bucket.id
+  target_prefix = "log/"
+}

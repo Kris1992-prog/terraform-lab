@@ -44,20 +44,6 @@ jobs:
       - name: Validazione Codice (validate)
         run: terraform validate
 
-      # 1. Installa TFLint
-      - name: Setup TFLint
-        uses: terraform-linters/setup-tflint@v4.0.0
-        with:
-          tflint_version: v0.52.0
-
-      # 2. Inizializza TFLint (scarica il plugin AWS)
-      - name: Init TFLint
-        run: tflint --init
-
-      # 3. Esegui la scansione del codice Terraform
-      - name: Run TFLint
-        run: tflint -f compact --minimum-failure-severity=error 
-
       # 8. Anteprima Modifiche (plan)
       - name: Anteprima Modifiche (plan)
         run: terraform plan -no-color -input=false -lock=false

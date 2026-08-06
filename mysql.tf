@@ -32,7 +32,6 @@ resource "aws_db_instance" "ecommerce_db" {
   publicly_accessible                 = false # Impedisce l'accesso pubblico diretto al database
   deletion_protection                 = false # Protezione dalla cancellazione accidentale
   iam_database_authentication_enabled = true  # Abilita l'autenticazione tramite ruoli IAM
-  performance_insights_enabled        = true  # Abilita Performance Insights per il monitoraggio avanzato
   username                            = "kris_admin"
   password                            = var.db_password
 

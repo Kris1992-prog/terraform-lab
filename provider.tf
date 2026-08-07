@@ -31,6 +31,12 @@ terraform {
 # Configurazione del Provider AWS (Originale)
 provider "aws" {
   region = "eu-south-1"
+
+  default_tags {
+    tags = {
+      Environment = "dev"
+    }
+  }
 }
 
 # Configurazione del Provider Kubernetes (Nuovo)
